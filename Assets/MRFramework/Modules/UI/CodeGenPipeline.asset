@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 232a815c081871a4db0bfb6cb8636ae1, type: 3}
+  m_Name: CodeGenPipeline
+  m_EditorClassIdentifier: 
+  Task:
+    Obj: {fileID: 0}
+    Binds:
+    - Obj: {fileID: 0}
+      InstanceID: -58484
+      MemberName: WBP_Counter_TestSV
+      TypeName: WBP_Counter_TestSV
+    - Obj: {fileID: 0}
+      InstanceID: -63844
+      MemberName: OpenMain
+      TypeName: UnityEngine.UI.Button
+    - Obj: {fileID: 0}
+      InstanceID: 38646
+      MemberName: Button_OpenSV
+      TypeName: UnityEngine.UI.Button
+    ScriptNamespace: 
+    ScriptName: WBP_Counter_MainUI
+    PanelViewFolder: Assets\Scripts\UI\Counter\UIContent
+    PanelFolder: Assets\Scripts\UI\Counter
+    PanelViewCode: "using UnityEngine;\r\nusing UnityEngine.Rendering;\r\n\r\npublic
+      partial class WBP_Counter_MainUI\r\n{\r\n\t[HideInInspector] public WBP_Counter_TestSV
+      WBP_Counter_TestSV;\r\n\t[HideInInspector] public UnityEngine.UI.Button OpenMain;\r\n\t[HideInInspector]
+      public UnityEngine.UI.Button Button_OpenSV;\r\n\r\n\tprivate void Awake()\r\n\t{\r\n\t\tUIContent
+      = transform.Find(\"UIContent\");\r\n\t\tUIMask = transform.Find(\"UIMask\").GetComponent<CanvasGroup>();\r\n\t\tCanvasGroup
+      = UIContent.GetComponent<CanvasGroup>();\r\n\t\tSortingGroup = transform.GetComponent<SortingGroup>();\r\n\r\n\t\t//
+      \u7EC4\u4EF6\u4E8B\u4EF6\u7ED1\u5B9A\r\n\t\tAddButtonClickListener(OpenMain,
+      OnOpenMainClick);\r\n\t\tAddButtonClickListener(Button_OpenSV, OnButton_OpenSVClick);\r\n\t}\r\n}\r\n"
+    PanelCode: "using System.Collections;\r\nusing System.Collections.Generic;\r\nusing
+      UnityEngine;\r\nusing MRFramework;\r\n\r\npublic partial class WBP_Counter_MainUI
+      : MainPanel\r\n{\r\n\tpublic override void OnAwake()\r\n\t{\r\n\r\n\t}\r\n\r\n\tpublic
+      override void OnOpen()\r\n\t{\r\n\r\n\t}\r\n\r\n\tpublic override void OnClose()\r\n\t{\r\n\r\n\t}\r\n\r\n\tpublic
+      override void OnDispose()\r\n\t{\r\n\r\n\t}\r\n\r\n\t#region UI\u7EC4\u4EF6\u4E8B\u4EF6\r\n\r\n\tpublic
+      void OnOpenMainClick()\r\n\t{\r\n\t}\r\n\r\n\tpublic void OnButton_OpenSVClick()\r\n\t{\r\n\t}\r\n\r\n\t#endregion\r\n}\r\n"

@@ -1,0 +1,35 @@
+{
+  "1": {
+    "Id": 1,
+    "Name": "妙蛙花",
+    "Level": 36,
+    "HP": 100,
+    "Atk": 10,
+    "Def": 10,
+    "SpAtk": 10,
+    "SpDef": 10,
+    "Speed": 5
+  },
+  "2": {
+    "Id": 2,
+    "Name": "水箭龟",
+    "Level": 36,
+    "HP": 100,
+    "Atk": 10,
+    "Def": 10,
+    "SpAtk": 10,
+    "SpDef": 10,
+    "Speed": 5
+  },
+  "3": {
+    "Id": 3,
+    "Name": "喷火龙",
+    "Level": 36,
+    "HP": 100,
+    "Atk": 10,
+    "Def": 10,
+    "SpAtk": 10,
+    "SpDef": 10,
+    "Speed": 5
+  }
+}

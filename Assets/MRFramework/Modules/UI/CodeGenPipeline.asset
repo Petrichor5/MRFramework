@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 232a815c081871a4db0bfb6cb8636ae1, type: 3}
+  m_Name: CodeGenPipeline
+  m_EditorClassIdentifier: 
+  Task:
+    Obj: {fileID: 0}
+    Binds:
+    - Obj: {fileID: 0}
+      InstanceID: 31284
+      MemberName: Group_Btn
+      TypeName: UnityEngine.GameObject
+    - Obj: {fileID: 0}
+      InstanceID: 31244
+      MemberName: Button_Reset
+      TypeName: ButtonPro
+    - Obj: {fileID: 0}
+      InstanceID: 31240
+      MemberName: CloseButton
+      TypeName: ButtonPro
+    - Obj: {fileID: 0}
+      InstanceID: 31254
+      MemberName: List_Grid
+      TypeName: ScrollViewPro
+    - Obj: {fileID: 0}
+      InstanceID: -4568
+      MemberName: WBP_LinkUp_ScoreSV
+      TypeName: WBP_LinkUp_ScoreSV
+    ScriptNamespace: 
+    ScriptName: WBP_LinkUp_Main
+    PanelViewFolder: Assets\Scripts\UI\LinkUp\View
+    PanelFolder: Assets\Scripts\UI\LinkUp
+    PanelViewCode: "using MRFramework;\r\nusing UnityEngine;\r\nusing UnityEngine.Rendering;\r\nusing
+      MRFramework.UGUIPro;\r\n\r\npublic partial class WBP_LinkUp_Main\r\n{\r\n\tpublic
+      UnityEngine.GameObject Group_Btn;\r\n\tpublic ButtonPro Button_Reset;\r\n\tpublic
+      ButtonPro CloseButton;\r\n\tpublic ScrollViewPro List_Grid;\r\n\tpublic WBP_LinkUp_ScoreSV
+      WBP_LinkUp_ScoreSV;\r\n\r\n}\r\n"
+    PanelCode: 

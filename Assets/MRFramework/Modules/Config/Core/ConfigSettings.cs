@@ -28,12 +28,12 @@ namespace MRFramework
         /// <summary>
         /// Json文件输出路径
         /// </summary>
-        public static string JsonOutputPath = Application.dataPath + "/AssetPackage/TableConfig/";
+        public static string JsonOutputPath = Application.dataPath + "/AssetPackage/Config/";
 
         /// <summary>
         /// Json数据加载路径
         /// </summary>
-        public static string JsonLoadPath = "Assets/AssetPackage/TableConfig/";
+        public static string JsonLoadPath = "Assets/AssetPackage/Config/";
 
         /// <summary>
         /// 真正内容开始的行号
@@ -48,6 +48,6 @@ namespace MRFramework
         /// <summary>
         /// Addressable 组名称
         /// </summary>
-        public static string GroupName = "TableConfig";
+        public static string GroupName = "Config";
     }
 }

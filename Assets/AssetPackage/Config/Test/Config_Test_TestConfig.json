@@ -1,0 +1,29 @@
+{
+  "1": {
+    "Id": 1,
+    "Name": "普通矿石1",
+    "StorageCount": 30,
+    "PrefabPath": "Assets/AssetPackage/Building/Mining/BP_Building_OreRock.prefab",
+    "IsCommonOre": true,
+    "BuildPosX": 0.0,
+    "BuildPosY": 0.0
+  },
+  "2": {
+    "Id": 2,
+    "Name": "普通矿石2",
+    "StorageCount": 30,
+    "PrefabPath": "Assets/AssetPackage/Building/Mining/BP_Building_OreRock.prefab",
+    "IsCommonOre": false,
+    "BuildPosX": 5.76,
+    "BuildPosY": 2.13
+  },
+  "3": {
+    "Id": 3,
+    "Name": "普通矿石3",
+    "StorageCount": 30,
+    "PrefabPath": "Assets/AssetPackage/Building/Mining/BP_Building_OreRock.prefab",
+    "IsCommonOre": false,
+    "BuildPosX": -3.4,
+    "BuildPosY": -3.78
+  }
+}

@@ -87,15 +87,15 @@ namespace MRFramework.UGUIPro
             if (m_ItemList == null || m_ItemList.Count == 0) return;
 
             // 计算总行数
-            Debug.Log($"ItemListCount = {m_ItemList.Count}, ColumnsPerRow = {m_ColumnsPerRow}");
+            //Debug.Log($"ItemListCount = {m_ItemList.Count}, ColumnsPerRow = {m_ColumnsPerRow}");
             int totalRows = Mathf.CeilToInt(m_ItemList.Count / m_ColumnsPerRow);
 
             // 计算Content的总高度
-            Debug.Log($"totalRows = {totalRows}, ItemHeight = {(m_ItemHeight + m_ItemOffsetY)}");
+            //Debug.Log($"totalRows = {totalRows}, ItemHeight = {(m_ItemHeight + m_ItemOffsetY)}");
             float totalHeight = totalRows * (m_ItemHeight + m_ItemOffsetY);
 
             // 更新Content的高度，宽度保持不变
-            Debug.Log($"Width = {content.sizeDelta.x}, Height = {totalHeight}");
+            //Debug.Log($"Width = {content.sizeDelta.x}, Height = {totalHeight}");
             content.sizeDelta = new Vector2(content.sizeDelta.x, totalHeight);
         }
 

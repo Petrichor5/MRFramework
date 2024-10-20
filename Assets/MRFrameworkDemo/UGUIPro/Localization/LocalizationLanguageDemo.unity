@@ -490,7 +490,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6CE8\u518C"
+  m_Text: Register Account
   winName: 
   m_TextSpacingExtend:
     m_UseTextSpacing: 0
@@ -641,7 +641,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u767B\u9646"
+  m_text: Login
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d91493015e1d6b640906630bfe410ac7, type: 2}
   m_sharedMaterial: {fileID: -5771879206571332867, guid: d91493015e1d6b640906630bfe410ac7, type: 2}
@@ -827,7 +827,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8BBE\u7F6E"
+  m_Text: Setting
   winName: 
   m_TextSpacingExtend:
     m_UseTextSpacing: 0

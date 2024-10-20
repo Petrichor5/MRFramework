@@ -5,32 +5,28 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Config;
+using MRFramework.UGUIPro;
 
 namespace MRFramework
 {
-    public class PanelBase : PanelBehaviour, IUnRegisterList, ICanGetController, ICanGetSystem, ICanGetUtility
+    public class PanelBase : PanelBehaviour, ICanGetController, ICanGetSystem, ICanGetUtility
     {
         private CanvasGroup m_UIMask;
         private CanvasGroup m_CanvasGroup;
         private Transform m_UIContent;
 
-        private List<Button> m_AllButtonList; // 所有Button列表
-        private List<Toggle> m_ToggleList; // 所有的Toggle列表
-        private List<InputField> m_InputList; // 所有的输入框列表
-        
-        private List<long> m_TimerIDList; // 计时器
-
         [HideInInspector] public long DestroyTimerID; // 销毁面板计时器ID
         private bool m_DisableAnim = false; // 禁用动画
 
-        private List<IUnRegister> m_AutoEventUnRegisterList;
-        public List<IUnRegister> UnRegisterList => m_AutoEventUnRegisterList; // 事件自动销毁
+        private List<Button> m_AllButtonList;
+        private List<Toggle> m_ToggleList;
+        private List<InputField> m_InputList;
 
-        
-        private List<SubPanel> m_SubPanleList; // 由该主面板管理的所有子面板列表
-        private Dictionary<string, List<SubPanel>> m_SubPanleItemList; // 存储滚动列表子项的子面板
-
-        private List<ReddotNode> m_ReddotNodeList; // 绑定事件的红点控件
+        private TimerComponent m_TimerComponent;
+        private EventComponent m_EventComponent;
+        private SubPanleComponent m_SubPanleComponent;
+        private ScrollComponent m_ScrollComponent;
+        private ReddotComponent m_ReddotComponent;
 
         /// <summary>
         /// 初始化基类组件
@@ -64,21 +60,48 @@ namespace MRFramework
         {
             base.OnOpen();
             ShowAnimation();
+
+            if (m_SubPanleComponent != null)
+                m_SubPanleComponent.OpenAllSubPanel();
+
+            if (m_ScrollComponent != null)
+                m_ScrollComponent.OpenAllItem();
         }
 
         public override void OnClose()
         {
             base.OnClose();
+            HideAnimation();
+
+            if (m_SubPanleComponent != null)
+                m_SubPanleComponent.CloseAllSubPanel();
+
+            if (m_ScrollComponent != null)
+                m_ScrollComponent.CloseAllItem();
         }
 
         public override void OnDispose()
         {
             base.OnDispose();
-            RemoveAllEventListener();
+
             RemoveAllButtonListener();
             RemoveAllToggleListener();
             RemoveAllInputListener();
-            ClearReddotData();
+
+            if (m_EventComponent != null)
+                m_EventComponent.Clear();
+
+            if (m_TimerComponent != null)
+                m_TimerComponent.Clear();
+
+            if (m_SubPanleComponent != null)
+                m_SubPanleComponent.Clear();
+
+            if (m_ScrollComponent != null)
+                m_ScrollComponent.Clear();
+
+            if (m_ReddotComponent != null)
+                m_ReddotComponent.Clear();
         }
 
         #endregion
@@ -186,150 +209,127 @@ namespace MRFramework
 
         #region 事件接口封装
 
-        /************************** 类型事件 **************************/
+        private EventComponent GetEventComponent()
+        {
+            if (m_EventComponent == null)
+            {
+                m_EventComponent = new EventComponent();
+            }
+
+            return m_EventComponent;
+        }
 
         public void AddEventListener<T>(Action<T> callback)
         {
-            EventManager.Instance.AddEventListener(callback)
-                .AddToUnregisterList(this);
+            GetEventComponent().AddEventListener(callback);
         }
 
         public void TriggerEventListener<T>(T callback)
         {
-            EventManager.Instance.TriggerEventListener(callback);
+            GetEventComponent().TriggerEventListener(callback);
         }
 
         public void TriggerEventListener<T>() where T : new()
         {
-            EventManager.Instance.TriggerEventListener<T>();
+            GetEventComponent().TriggerEventListener<T>();
         }
-
-        /************************** 字符串事件 **************************/
 
         public void AddEventListener(string key, Action callback)
         {
-            EventManager.Instance.AddEventListener(key, callback)
-                .AddToUnregisterList(this);
+            GetEventComponent().AddEventListener(key, callback);
         }
 
         public void TriggerEventListener(string key)
         {
-            EventManager.Instance.TriggerEventListener(key);
+            GetEventComponent().TriggerEventListener(key);
         }
-
-        /*********** T1 ***********/
 
         public void AddEventListener<T>(string key, Action<T> callback)
         {
-            EventManager.Instance.AddEventListener(key, callback)
-                .AddToUnregisterList(this);
+            GetEventComponent().AddEventListener(key, callback);
         }
 
         public void TriggerEventListener<T>(string key, T data)
         {
-            EventManager.Instance.TriggerEventListener(key, data);
-        }
-
-        /*********** T1 T2 ***********/
-
-
-        /************************** End **************************/
-
-        public void RemoveAllEventListener()
-        {
-            if (UnRegisterList == null) return;
-
-            this.UnRegisterAll();
+            GetEventComponent().TriggerEventListener(key, data);
         }
 
         #endregion
 
         #region 计时器
 
+        private TimerComponent GetTimerComponent()
+        {
+            if (m_TimerComponent == null)
+                m_TimerComponent = new TimerComponent();
+            return m_TimerComponent;
+        }
+
         public long StartTimer(float duration, Action onTimerComplete = null, bool isLooping = false,
             float interval = 0f, Action<float> onInterval = null, bool calculateEscapedTime = true)
         {
-            if (m_TimerIDList == null) m_TimerIDList = new List<long>();
-
-            long timerID = TimerManager.Instance.AddTimer(duration, onTimerComplete, isLooping, interval, onInterval,
-                calculateEscapedTime);
-            m_TimerIDList.Add(timerID);
-            return timerID;
+            return GetTimerComponent().StartTimer(duration, onTimerComplete, isLooping, interval, onInterval, calculateEscapedTime);
         }
 
         public void RemoveTimer(int timerKey)
         {
-            if (m_TimerIDList == null) return;
-
-            TimerManager.Instance.RemoveTimer(timerKey);
-            m_TimerIDList.Remove(timerKey);
-        }
-
-        public void RemoveAllTimer()
-        {
-            if (m_TimerIDList == null) return;
-
-            foreach (var timerKey in m_TimerIDList)
-            {
-                TimerManager.Instance.RemoveTimer(timerKey);
-            }
-
-            m_TimerIDList.Clear();
+            GetTimerComponent().RemoveTimer(timerKey);
         }
 
         #endregion
 
         #region 子面板
 
+        private SubPanleComponent GetSubPanleComponent()
+        {
+            if (m_SubPanleComponent == null)
+                m_SubPanleComponent = new SubPanleComponent();
+            return m_SubPanleComponent;
+        }
+
         public void AddSubPanle(SubPanel subPanel)
         {
-            if (m_SubPanleList == null)
-                m_SubPanleList = new List<SubPanel>();
-
-            subPanel.OnInit();
-            m_SubPanleList.Add(subPanel);
+            GetSubPanleComponent().AddSubPanle(subPanel);
         }
 
         public void RemoveSubPanel(SubPanel subPanel)
         {
-            if (m_SubPanleList == null) return;
-
-            if (m_SubPanleList.Contains(subPanel))
-            {
-                subPanel.OnClear();
-                m_SubPanleList.Remove(subPanel);
-                
-                Destroy(subPanel.gameObject);
-            }
+            GetSubPanleComponent().RemoveSubPanel(subPanel);
         }
 
-        public void ClearAllSubPanle()
-        {
-            if (m_SubPanleList == null) return;
+        #endregion
 
-            for (int i = 0; i < m_SubPanleList.Count; i++)
-            {
-                m_SubPanleList[i].OnClear();
-                Destroy(m_SubPanleList[i].gameObject);
-            }
-            m_SubPanleList.Clear();
+        #region 滚动列表
+
+        private ScrollComponent GetScrollComponent()
+        {
+            if (m_ScrollComponent == null)
+                m_ScrollComponent = new ScrollComponent();
+            return m_ScrollComponent;
+        }
+
+        public void InitScrollView(ScrollViewPro scrollView)
+        {
+            GetScrollComponent().InitScrollView(scrollView);
         }
 
         #endregion
 
         #region 红点
 
+        private ReddotComponent GetReddotComponent()
+        {
+            if (m_ReddotComponent == null)
+                m_ReddotComponent = new ReddotComponent();
+            return m_ReddotComponent;
+        }
+
         /// <summary>
         /// 清空所有红点刷新数据
         /// </summary>
         public void ResetAllReddotData()
         {
-            if (m_ReddotNodeList == null) return;
-
-            foreach (var item in m_ReddotNodeList)
-            {
-                item.ResetReddotData();
-            }
+            GetReddotComponent().ResetAllReddotData();
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace MRFramework
         /// </summary>
         public void ResetReddotData(ReddotNode item)
         {
-            item.ResetReddotData();
+            GetReddotComponent().ResetReddotData(item);
         }
 
         /// <summary>
@@ -345,24 +345,7 @@ namespace MRFramework
         /// </summary>
         public void SetReddotData(ReddotNode item, EReddot eReddot, string node)
         {
-            if (m_ReddotNodeList == null) m_ReddotNodeList = new List<ReddotNode>();
-
-            if (!m_ReddotNodeList.Contains(item))
-            {
-                m_ReddotNodeList.Add(item);
-            }
-            item.SetReddotData(eReddot, node);
-        }
-
-        private void ClearReddotData()
-        {
-            if (m_ReddotNodeList == null) return;
-
-            foreach (var item in m_ReddotNodeList)
-            {
-                item.ResetReddotData();
-            }
-            m_ReddotNodeList.Clear();
+            GetReddotComponent().SetReddotData(item, eReddot, node);
         }
 
         #endregion

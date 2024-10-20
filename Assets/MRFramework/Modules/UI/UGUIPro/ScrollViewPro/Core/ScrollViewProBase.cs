@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 namespace MRFramework.UGUIPro
@@ -7,7 +8,9 @@ namespace MRFramework.UGUIPro
     [System.Serializable]
     public class ScrollViewProBase : ScrollRect
     {
-        [Header("Item预制体")][SerializeField] private GameObject m_ItemPrefab;
+        [Header("Item预制体")]
+        public AssetReferenceGameObject ItemPrefab;
+
         protected float m_ItemWidth;
         protected float m_ItemHeight;
         protected float m_ItemOffsetX;
@@ -16,8 +19,6 @@ namespace MRFramework.UGUIPro
 
         protected SimpleObjectPool<GameObject> m_ItemPool; // Item 对象池
         protected List<RectTransform> m_ItemList; // 保存可见项的 RectTransform
-
-        public GameObject ItemPrefab => m_ItemPrefab;
 
         public void Initialize()
         {
@@ -65,9 +66,10 @@ namespace MRFramework.UGUIPro
 
         private GameObject CreateItem()
         {
-            GameObject gameObject = Instantiate(ItemPrefab, content);
+            var aoh = Addressables.InstantiateAsync(ItemPrefab, content);
+            aoh.WaitForCompletion();
+            GameObject gameObject = aoh.Result;
             ScrollViewItem item = gameObject.GetComponent<ScrollViewItem>();
-            item.SetDisableAnim(false); // 关闭弹窗动画
             item.OnFirstOpen();
             return gameObject;
         }
@@ -81,9 +83,8 @@ namespace MRFramework.UGUIPro
         private void OnClearItem(GameObject obj)
         {
             var item = obj.GetComponent<ScrollViewItem>();
-            item.Close();
             item.OnDispose();
-            Destroy(obj);
+            Addressables.ReleaseInstance(obj);
         }
     }
 }

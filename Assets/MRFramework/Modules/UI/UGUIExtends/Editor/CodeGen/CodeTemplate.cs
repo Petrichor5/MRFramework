@@ -45,6 +45,7 @@ namespace MRFramework
             writer.AppendLine("\t{");
             writer.AppendLine("\t\tbase.OnFirstOpen();");
             writer.AppendLine("\t\tInitWidgets();");
+            writer.AppendLine("\t\tAddEventListeners();");
             writer.AppendLine("\t}");
             writer.AppendLine();
             
@@ -57,6 +58,11 @@ namespace MRFramework
             InitButton(writer);
             InitInputField(writer);
             InitInputToggle(writer);
+            writer.AppendLine("\t}");
+            writer.AppendLine();
+
+            writer.AppendLine("\tpublic void AddEventListeners()");
+            writer.AppendLine("\t{");
             writer.AppendLine("\t}");
             writer.AppendLine();
 

@@ -357,7 +357,7 @@ namespace MRFramework
             m_DisableAnim = disable;
         }
 
-        public void ShowAnimation()
+        public virtual void ShowAnimation()
         {
             if (!m_DisableAnim) return;
 
@@ -380,7 +380,7 @@ namespace MRFramework
             }
         }
 
-        public void HideAnimation()
+        public virtual void HideAnimation()
         {
             if (!m_DisableAnim)
             {

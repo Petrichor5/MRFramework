@@ -12,7 +12,7 @@ namespace MRFramework.UGUIPro
         protected override void OnEnable()
         {
             base.OnEnable();
-            m_ItemPrefab = serializedObject.FindProperty("m_ItemPrefab");
+            m_ItemPrefab = serializedObject.FindProperty("ItemPrefab");
         }
 
         public override void OnInspectorGUI()

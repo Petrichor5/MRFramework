@@ -4,6 +4,8 @@ using System.Data;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MRFramework
@@ -28,6 +30,7 @@ namespace MRFramework
             sb.AppendLine(" *******************************/ ");
             sb.AppendLine();
             sb.AppendLine("using System.Text;");
+            sb.AppendLine("using UnityEngine;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine();
             
@@ -96,19 +99,38 @@ namespace MRFramework
                     if (row[j] is DBNull) continue;
 
                     string columnName = rowName[j].ToString();
+                    string content = row[j].ToString();
                     switch (rowType[j].ToString())
                     {
                         case "int":
-                            rowData[columnName] = int.Parse(row[j].ToString());
+                            rowData[columnName] = int.Parse(content);
                             break;
                         case "float":
-                            rowData[columnName] = float.Parse(row[j].ToString());
+                            rowData[columnName] = float.Parse(content);
                             break;
                         case "bool":
-                            rowData[columnName] = bool.Parse(row[j].ToString());
+                            rowData[columnName] = bool.Parse(content);
                             break;
                         case "string":
-                            rowData[columnName] = row[j].ToString();
+                            rowData[columnName] = content;
+                            break;
+                        case "int[]":
+                            rowData[columnName] = new JArray(ConfigUtil.GetList<int>(content, ','));
+                            break;
+                        case "float[]":
+                            rowData[columnName] = new JArray(ConfigUtil.GetList<float>(content, ','));
+                            break;
+                        case "string[]":
+                            rowData[columnName] = new JArray(ConfigUtil.GetList<string>(content, ','));
+                            break;
+                        case "Vector2":
+                            rowData[columnName] = ConfigUtil.GetVectorValue(content, ',');
+                            break;
+                        case "Vector3":
+                            rowData[columnName] = ConfigUtil.GetVectorValue(content, ',');
+                            break;
+                        default:
+                            Debug.LogError($"该类型暂不支持 Type: {rowType[j]}");
                             break;
                     }
                 }
@@ -121,7 +143,9 @@ namespace MRFramework
             }
 
             // 序列化字典为JSON字符串
-            string json = JsonConvert.SerializeObject(dataDictionary, Formatting.Indented);
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            string json = JsonConvert.SerializeObject(dataDictionary, Formatting.Indented, settings);
 
             string fullPath = Path.Combine(outputPath, jsonFileName + ".json");
             // 将JSON字符串写入文件

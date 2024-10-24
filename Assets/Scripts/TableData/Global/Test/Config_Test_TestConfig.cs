@@ -1,9 +1,10 @@
 /*******************************
  * Desc: 以下代码为导表工具自动化生成，请不要手动更改。
- * Date: 2024-10-20 21:35:13
+ * Date: 2024-10-25 01:03:21
  *******************************/ 
 
 using System.Text;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace Config
@@ -15,8 +16,11 @@ namespace Config
 		public int StorageCount;
 		public string PrefabPath;
 		public bool IsCommonOre;
-		public float BuildPosX;
-		public float BuildPosY;
+		public int[] IntArrayTest;
+		public string[] StringArrayTest;
+		public float[] FloatArrayTest;
+		public Vector2 BuildPos1;
+		public Vector3 BuildPos2;
 
 		public override string ToString()
 		{
@@ -26,8 +30,11 @@ namespace Config
 			sb.AppendLine("StorageCount: " + StorageCount.ToString());
 			sb.AppendLine("PrefabPath: " + PrefabPath.ToString());
 			sb.AppendLine("IsCommonOre: " + IsCommonOre.ToString());
-			sb.AppendLine("BuildPosX: " + BuildPosX.ToString());
-			sb.AppendLine("BuildPosY: " + BuildPosY.ToString());
+			sb.AppendLine("IntArrayTest: " + IntArrayTest.ToString());
+			sb.AppendLine("StringArrayTest: " + StringArrayTest.ToString());
+			sb.AppendLine("FloatArrayTest: " + FloatArrayTest.ToString());
+			sb.AppendLine("BuildPos1: " + BuildPos1.ToString());
+			sb.AppendLine("BuildPos2: " + BuildPos2.ToString());
 			return sb.ToString();
 		}
 	}

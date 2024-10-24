@@ -1,5 +1,7 @@
-﻿using System.Data;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using UnityEngine;
 using System.IO;
 
 namespace MRFramework
@@ -169,6 +171,50 @@ namespace MRFramework
         public static DataRow GetEnumTypeRow(DataTable table)
         {
             return table.Rows[0];
+        }
+
+        /// <summary>
+        /// 字符串拆分列表
+        /// </summary>
+        public static List<T> GetList<T>(string str, char spliteChar)
+        {
+            string[] strs = str.Split(spliteChar);
+            int length = strs.Length;
+            List<T> array = new List<T>(length);
+            for (int i = 0; i < length; i++)
+            {
+                array.Add(GetValue<T>(strs[i]));
+            }
+            return array;
+        }
+
+        /// <summary>
+        /// 特殊类型 Vector
+        /// </summary>
+        public static IFormattable GetVectorValue(string str, char spliteChar)
+        {
+            string[] strs = str.Split(spliteChar);
+            int length = strs.Length;
+            switch (length)
+            {
+                case 2:
+                    Vector2 v2 = new Vector2();
+                    float.TryParse(strs[0], out v2.x);
+                    float.TryParse(strs[1], out v2.y);
+                    return v2;
+                case 3:
+                    Vector3 v3 = new Vector3();
+                    float.TryParse(strs[0], out v3.x);
+                    float.TryParse(strs[1], out v3.y);
+                    float.TryParse(strs[2], out v3.z);
+                    return v3;
+            }
+            return null;
+        }
+
+        private static T GetValue<T>(object value)
+        {
+            return (T)Convert.ChangeType(value, typeof(T));
         }
     }
 }

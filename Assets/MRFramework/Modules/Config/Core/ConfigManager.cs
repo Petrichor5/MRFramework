@@ -57,7 +57,9 @@ namespace MRFramework
                 // 创建容器对象
                 Type containerType = typeof(IDictionary<int, TData>);
                 // 反序列化Json
-                var config = JsonConvert.DeserializeObject(jsonContent, containerType);
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                var config = JsonConvert.DeserializeObject(jsonContent, containerType, settings);
                 m_ConfigCache[configName] = config as IDictionary;
                 data = (IDictionary<int, TData>)config;
             }

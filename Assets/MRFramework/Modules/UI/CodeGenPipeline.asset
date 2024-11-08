@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 232a815c081871a4db0bfb6cb8636ae1, type: 3}
+  m_Name: CodeGenPipeline
+  m_EditorClassIdentifier: 
+  Task:
+    Obj: {fileID: 0}
+    Binds:
+    - Obj: {fileID: 0}
+      InstanceID: 40966
+      MemberName: Button_Tips
+      TypeName: ButtonPro
+    - Obj: {fileID: 0}
+      InstanceID: 41008
+      MemberName: Button_Close
+      TypeName: ButtonPro
+    - Obj: {fileID: 0}
+      InstanceID: -26130
+      MemberName: Image_Lock
+      TypeName: ImagePro
+    - Obj: {fileID: 0}
+      InstanceID: 41022
+      MemberName: Button_Start
+      TypeName: ButtonPro
+    ScriptNamespace: 
+    ScriptName: WBP_Level_Main
+    PanelViewFolder: Assets\Scripts\UI\Level\View
+    PanelFolder: Assets\Scripts\UI\Level
+    PanelViewCode: "using MRFramework;\r\nusing UnityEngine;\r\nusing UnityEngine.Rendering;\r\nusing
+      MRFramework.UGUIPro;\r\n\r\npublic partial class WBP_Level_Main\r\n{\r\n\tpublic
+      ButtonPro Button_Tips;\r\n\tpublic ButtonPro Button_Close;\r\n\tpublic ImagePro
+      Image_Lock;\r\n\tpublic ButtonPro Button_Start;\r\n\r\n}\r\n"
+    PanelCode: 

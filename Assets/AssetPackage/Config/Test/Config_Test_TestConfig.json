@@ -1,0 +1,167 @@
+{
+  "1": {
+    "Id": 1,
+    "Name": "普通矿石1",
+    "StorageCount": 30,
+    "PrefabPath": "Assets/AssetPackage/Building/Mining/BP_Building_OreRock.prefab",
+    "IsCommonOre": true,
+    "IntArrayTest": [
+      1,
+      2,
+      3
+    ],
+    "StringArrayTest": [
+      "\"测试1\"",
+      " \"测试2\"",
+      " \"测试3\""
+    ],
+    "FloatArrayTest": [
+      1.5,
+      2.0,
+      3.8
+    ],
+    "BuildPos1": {
+      "x": 2.7,
+      "y": 3.4,
+      "normalized": {
+        "x": 0.621882141,
+        "y": 0.783110857,
+        "magnitude": 1.0,
+        "sqrMagnitude": 1.0
+      },
+      "magnitude": 4.34165859,
+      "sqrMagnitude": 18.85
+    },
+    "BuildPos2": {
+      "x": 2.7,
+      "y": 3.4,
+      "z": 8.9,
+      "normalized": {
+        "x": 0.272657752,
+        "y": 0.343346775,
+        "z": 0.8987606,
+        "normalized": {
+          "x": 0.272657782,
+          "y": 0.3433468,
+          "z": 0.8987607,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 0.99999994,
+        "sqrMagnitude": 0.9999999
+      },
+      "magnitude": 9.902525,
+      "sqrMagnitude": 98.06
+    }
+  },
+  "2": {
+    "Id": 2,
+    "Name": "普通矿石2",
+    "StorageCount": 30,
+    "PrefabPath": "Assets/AssetPackage/Building/Mining/BP_Building_OreRock.prefab",
+    "IsCommonOre": false,
+    "IntArrayTest": [
+      1,
+      2,
+      3
+    ],
+    "StringArrayTest": [
+      "\"测试1\"",
+      " \"测试2\"",
+      " \"测试3\""
+    ],
+    "FloatArrayTest": [
+      1.5,
+      2.0,
+      3.8
+    ],
+    "BuildPos1": {
+      "x": 2.7,
+      "y": 3.4,
+      "normalized": {
+        "x": 0.621882141,
+        "y": 0.783110857,
+        "magnitude": 1.0,
+        "sqrMagnitude": 1.0
+      },
+      "magnitude": 4.34165859,
+      "sqrMagnitude": 18.85
+    },
+    "BuildPos2": {
+      "x": 2.7,
+      "y": 3.4,
+      "z": 8.9,
+      "normalized": {
+        "x": 0.272657752,
+        "y": 0.343346775,
+        "z": 0.8987606,
+        "normalized": {
+          "x": 0.272657782,
+          "y": 0.3433468,
+          "z": 0.8987607,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 0.99999994,
+        "sqrMagnitude": 0.9999999
+      },
+      "magnitude": 9.902525,
+      "sqrMagnitude": 98.06
+    }
+  },
+  "3": {
+    "Id": 3,
+    "Name": "普通矿石3",
+    "StorageCount": 30,
+    "PrefabPath": "Assets/AssetPackage/Building/Mining/BP_Building_OreRock.prefab",
+    "IsCommonOre": false,
+    "IntArrayTest": [
+      1,
+      2,
+      3
+    ],
+    "StringArrayTest": [
+      "\"测试1\"",
+      " \"测试2\"",
+      " \"测试3\""
+    ],
+    "FloatArrayTest": [
+      1.5,
+      2.0,
+      3.8
+    ],
+    "BuildPos1": {
+      "x": 2.7,
+      "y": 3.4,
+      "normalized": {
+        "x": 0.621882141,
+        "y": 0.783110857,
+        "magnitude": 1.0,
+        "sqrMagnitude": 1.0
+      },
+      "magnitude": 4.34165859,
+      "sqrMagnitude": 18.85
+    },
+    "BuildPos2": {
+      "x": 2.7,
+      "y": 3.4,
+      "z": 8.9,
+      "normalized": {
+        "x": 0.272657752,
+        "y": 0.343346775,
+        "z": 0.8987606,
+        "normalized": {
+          "x": 0.272657782,
+          "y": 0.3433468,
+          "z": 0.8987607,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 0.99999994,
+        "sqrMagnitude": 0.9999999
+      },
+      "magnitude": 9.902525,
+      "sqrMagnitude": 98.06
+    }
+  }
+}

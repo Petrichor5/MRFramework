@@ -1,114 +1,218 @@
-﻿using Excel;
-using System.Data;
+﻿using System.Data;
 using System.IO;
-using UnityEditor;
 using MRFramework;
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
-public class ConfigTool
+public static class ConfigTool
 {
-    [MenuItem("MRFramework/GenerateExcel 导表生成工具")]
-    private static void GenerateExcelInfo()
+    /// <summary>
+    /// 获取Enum文件名称
+    /// </summary>
+    /// <param name="excelFilePath">Excel文件路径</param>
+    /// <param name="tableName">表名称</param>
+    /// <returns></returns>
+    public static string GetEnumFileName(string excelFilePath, string tableName)
     {
-        GenerateEnumConfig();
-        GenerateGlobalConfig();
+        // // 生成JSON文件名，包含路径前缀（如果有的话）
+        // string jsonFileName;
+        // string relativePath = Path.GetDirectoryName(excelFilePath);
+        //
+        // if (relativePath == ConfigSettings.EnumExcelPath)
+        // {
+        //     // 文件在根目录时，使用表名作为文件名
+        //     jsonFileName = $"Enum_{tableName}";
+        // }
+        // else
+        // {
+        //     // 文件在子目录时，使用相对路径作为前缀
+        //     relativePath = relativePath?.Substring(ConfigSettings.EnumExcelPath.Length + 1)
+        //         .Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
+        //     jsonFileName = $"Enum_{relativePath}_{tableName}";
+        // }
+        //
+        // return jsonFileName;
 
-        AssetDatabase.Refresh(); // 刷新Project窗口
+        return tableName;
     }
 
     /// <summary>
-    /// 生成枚举导表数据
+    /// 获取枚举类文件存储路径
     /// </summary>
-    private static void GenerateEnumConfig()
+    /// <param name="excelFilePath">Excel文件路径</param>
+    public static string GetEnumOutputPath(string excelFilePath)
     {
-        ConfigSettings.EnumExcelPath.CreateDirIfNotExists();
-        DirectoryInfo dInfo = new DirectoryInfo(ConfigSettings.EnumExcelPath);
-        FileInfo[] files = dInfo.GetFiles("*.*", SearchOption.AllDirectories);
-        DataTableCollection tableCollection = null;
-        for (int i = 0; i < files.Length; i++)
+        string relativePath = Path.GetDirectoryName(excelFilePath);
+        string enumExcelPath = ConfigSettings.EnumExcelPath;
+        enumExcelPath = enumExcelPath.Replace("/", "\\");
+
+        string path = ConfigSettings.EnumOutputPath;
+        if (relativePath != enumExcelPath)
         {
-            if (files[i].Extension != ".xlsx" && files[i].Extension != ".xls")
-                continue;
-            Debug.Log(files[i].Name);
-            GenerateEnum(tableCollection, files[i]);
+            // 文件在子目录时
+            relativePath = relativePath?.Substring(enumExcelPath.Length + 1)
+                .Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
+            path = Path.Combine(ConfigSettings.EnumOutputPath, relativePath);
         }
-    }
-    
-    /// <summary>
-    /// 生成枚举数据
-    /// </summary>
-    private static void GenerateEnum(DataTableCollection tableCollection, FileInfo file)
-    {
-        using (FileStream fs = file.Open(FileMode.Open, FileAccess.Read))
-        {
-            IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(fs);
-            tableCollection = excelReader.AsDataSet().Tables;
-            fs.Close();
-        }
-        
-        foreach (DataTable table in tableCollection)
-        {
-            // 生成枚举文件名，包含路径前缀（如果有的话）
-            string jsonFileName = ConfigUtil.GetEnumFileName(file.FullName, table.TableName);
-            
-            // 生成枚举类
-            string enumSavePath = ConfigUtil.GetEnumOutputPath(file.FullName);
-            ConfigFactory.GenerateExcelEnum(table, jsonFileName, enumSavePath);
-        }
+
+        return path;
     }
 
     /// <summary>
-    /// 生成导表数据
+    /// 获取Josn文件名称
     /// </summary>
-    private static void GenerateGlobalConfig()
+    /// <param name="excelFilePath">Excel文件路径</param>
+    /// <param name="tableName">表名称</param>
+    /// <returns></returns>
+    public static string GetJsonFileName(string excelFilePath, string tableName)
     {
-        ConfigSettings.GlobalExcelPath.CreateDirIfNotExists();
-        
-        // 记在指定路径中的所有Excel文件 用于生成对应的3个文件
-        DirectoryInfo dInfo = new DirectoryInfo(ConfigSettings.GlobalExcelPath);
-        
-        // 得到指定路径中的所有文件信息 相当于就是得到所有的Excel表
-        FileInfo[] files = dInfo.GetFiles("*.*", SearchOption.AllDirectories);
-        
-        // 数据表容器
-        DataTableCollection tableCollection = null;
-        
-        for (int i = 0; i < files.Length; i++)
-        {
-            // 如果不是excel文件就不要处理了
-            if (files[i].Extension != ".xlsx" && files[i].Extension != ".xls")
-                continue;
+        // 生成JSON文件名，包含路径前缀（如果有的话）
+        string jsonFileName;
+        string relativePath = Path.GetDirectoryName(excelFilePath);
+        string excelPath = ConfigSettings.GlobalExcelPath;
+        excelPath = excelPath.Replace("/", "\\");
 
-            GenerateConfig(tableCollection, files[i]);
+        if (relativePath == excelPath)
+        {
+            // 文件在根目录时，使用表名作为文件名
+            jsonFileName = $"Config_{tableName}";
         }
+        else
+        {
+            // 文件在子目录时，使用相对路径作为前缀
+            relativePath = relativePath?.Substring(excelPath.Length + 1)
+                .Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
+            jsonFileName = $"Config_{relativePath}_{tableName}";
+        }
+
+        return jsonFileName;
     }
 
     /// <summary>
-    /// 生成导表
+    /// 获取容器类文件存储路径
     /// </summary>
-    private static void GenerateConfig(DataTableCollection tableCollection, FileInfo file)
+    /// <param name="excelFilePath">Excel文件路径</param>
+    public static string GetContainerOutputPath(string excelFilePath)
     {
-        // 打开一个Excel文件得到其中的所有表的数据 ( 如果报错！可能是因为没有关闭Excel表，请关闭所有打开的Excel表! )
-        using (FileStream fs = file.Open(FileMode.Open, FileAccess.Read))
+        string relativePath = Path.GetDirectoryName(excelFilePath);
+        string excelPath = ConfigSettings.GlobalExcelPath;
+        excelPath = excelPath.Replace("/", "\\");
+
+        string path = ConfigSettings.ContainerOutputPath;
+        if (relativePath != excelPath)
         {
-            IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(fs);
-            tableCollection = excelReader.AsDataSet().Tables;
-            fs.Close();
+            // 文件在子目录时
+            relativePath = relativePath?.Substring(excelPath.Length + 1)
+                .Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
+            path = Path.Combine(ConfigSettings.ContainerOutputPath, relativePath);
         }
 
-        // 遍历文件中的所有表的信息
-        foreach (DataTable table in tableCollection)
+        return path;
+    }
+
+    /// <summary>
+    /// 获取Josn文件存储路径
+    /// </summary>
+    /// <param name="excelFilePath">Excel文件路径</param>
+    public static string GetJsonOutputPath(string excelFilePath)
+    {
+        string relativePath = Path.GetDirectoryName(excelFilePath);
+        string excelPath = ConfigSettings.GlobalExcelPath;
+        excelPath = excelPath.Replace("/", "\\");
+
+        string path = ConfigSettings.JsonOutputPath;
+        if (relativePath != excelPath)
         {
-            // 生成JSON文件名，包含路径前缀（如果有的话）
-            string jsonFileName = ConfigUtil.GetJsonFileName(file.FullName, table.TableName);
-                
-            // 生成容器类
-            string containerSavePath = ConfigUtil.GetContainerOutputPath(file.FullName);
-            ConfigFactory.GenerateExcelContainer(table, jsonFileName, containerSavePath);
-                
-            // 生成JSON数据
-            string jsonSavePath = ConfigUtil.GetJsonOutputPath(file.FullName);
-            ConfigFactory.GenerateExcelJson(table, jsonFileName, jsonSavePath);
+            // 文件在子目录时
+            relativePath = relativePath?.Substring(excelPath.Length + 1)
+                .Replace(Path.DirectorySeparatorChar, '_').Replace(Path.AltDirectorySeparatorChar, '_');
+            path = Path.Combine(ConfigSettings.JsonOutputPath, relativePath);
         }
+
+        return path;
+    }
+
+    /// <summary>
+    /// 获取变量名所在行
+    /// </summary>
+    public static DataRow GetVariableNameRow(DataTable table)
+    {
+        return table.Rows[0];
+    }
+
+    /// <summary>
+    /// 获取变量类型所在行
+    /// </summary>
+    public static DataRow GetVariableTypeRow(DataTable table)
+    {
+        return table.Rows[1];
+    }
+
+    /// <summary>
+    /// 获取主键索引
+    /// </summary>
+    public static int GetKeyIndex(DataTable table)
+    {
+        DataRow row = table.Rows[2];
+        for (int i = 0; i < table.Columns.Count; i++)
+        {
+            if (row[i].ToString() == "key")
+                return i;
+        }
+
+        return 0;
+    }
+
+    /// <summary>
+    /// 获取枚举字段类型行
+    /// </summary>
+    public static DataRow GetEnumTypeRow(DataTable table)
+    {
+        return table.Rows[0];
+    }
+
+    /// <summary>
+    /// 字符串拆分列表
+    /// </summary>
+    public static List<T> GetList<T>(string str, char spliteChar)
+    {
+        string[] strs = str.Split(spliteChar);
+        int length = strs.Length;
+        List<T> array = new List<T>(length);
+        for (int i = 0; i < length; i++)
+        {
+            array.Add(GetValue<T>(strs[i]));
+        }
+        return array;
+    }
+
+    /// <summary>
+    /// 特殊类型 Vector
+    /// </summary>
+    public static IFormattable GetVectorValue(string str, char spliteChar)
+    {
+        string[] strs = str.Split(spliteChar);
+        int length = strs.Length;
+        switch (length)
+        {
+            case 2:
+                Vector2 v2 = new Vector2();
+                float.TryParse(strs[0], out v2.x);
+                float.TryParse(strs[1], out v2.y);
+                return v2;
+            case 3:
+                Vector3 v3 = new Vector3();
+                float.TryParse(strs[0], out v3.x);
+                float.TryParse(strs[1], out v3.y);
+                float.TryParse(strs[2], out v3.z);
+                return v3;
+        }
+        return null;
+    }
+
+    private static T GetValue<T>(object value)
+    {
+        return (T)Convert.ChangeType(value, typeof(T));
     }
 }

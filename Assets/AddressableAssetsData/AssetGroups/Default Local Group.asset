@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 05fc3695ed3c3794b90dec122bb73899
-  m_SerializeEntries:
-  - m_GUID: 243fabd7effd752429d0af69bf542b8b
-    m_Address: Assets/MRFrameworkDemo/UGUIPro/ScrollView/Item.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: acc5f8e266b479a4291337d63a512f39, type: 2}
   m_SchemaSet:

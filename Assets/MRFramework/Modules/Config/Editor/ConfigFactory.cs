@@ -19,8 +19,8 @@ namespace MRFramework
         {
             outputPath.CreateDirIfNotExists();
 
-            DataRow rowName = ConfigUtil.GetVariableNameRow(table); // 字段名行
-            DataRow rowType = ConfigUtil.GetVariableTypeRow(table); // 字段类型行
+            DataRow rowName = ConfigTool.GetVariableNameRow(table); // 字段名行
+            DataRow rowType = ConfigTool.GetVariableTypeRow(table); // 字段类型行
 
             StringBuilder sb = new StringBuilder();
 
@@ -87,8 +87,8 @@ namespace MRFramework
             // 遍历所有内容的行
             DataRow row;
             // 得到类型行 根据类型来决定应该如何写入数据
-            DataRow rowType = ConfigUtil.GetVariableTypeRow(table);
-            DataRow rowName = ConfigUtil.GetVariableNameRow(table);
+            DataRow rowType = ConfigTool.GetVariableTypeRow(table);
+            DataRow rowName = ConfigTool.GetVariableNameRow(table);
 
             for (int i = ConfigSettings.BeginIndex; i < table.Rows.Count; i++)
             {
@@ -115,19 +115,19 @@ namespace MRFramework
                             rowData[columnName] = content;
                             break;
                         case "int[]":
-                            rowData[columnName] = new JArray(ConfigUtil.GetList<int>(content, ','));
+                            rowData[columnName] = new JArray(ConfigTool.GetList<int>(content, ','));
                             break;
                         case "float[]":
-                            rowData[columnName] = new JArray(ConfigUtil.GetList<float>(content, ','));
+                            rowData[columnName] = new JArray(ConfigTool.GetList<float>(content, ','));
                             break;
                         case "string[]":
-                            rowData[columnName] = new JArray(ConfigUtil.GetList<string>(content, ','));
+                            rowData[columnName] = new JArray(ConfigTool.GetList<string>(content, ','));
                             break;
                         case "Vector2":
-                            rowData[columnName] = ConfigUtil.GetVectorValue(content, ',');
+                            rowData[columnName] = ConfigTool.GetVectorValue(content, ',');
                             break;
                         case "Vector3":
-                            rowData[columnName] = ConfigUtil.GetVectorValue(content, ',');
+                            rowData[columnName] = ConfigTool.GetVectorValue(content, ',');
                             break;
                         default:
                             Debug.LogError($"该类型暂不支持 Type: {rowType[j]}");
@@ -137,7 +137,7 @@ namespace MRFramework
 
                 if (rowData.Count > 0)
                 {
-                    var index = ConfigUtil.GetKeyIndex(table);
+                    var index = ConfigTool.GetKeyIndex(table);
                     dataDictionary.Add(row[index].ToString(), rowData);
                 }
             }
@@ -159,7 +159,7 @@ namespace MRFramework
         {
             outputPath.CreateDirIfNotExists();
 
-            DataRow rowType = ConfigUtil.GetEnumTypeRow(table); // 枚举字段类型行
+            DataRow rowType = ConfigTool.GetEnumTypeRow(table); // 枚举字段类型行
             
             StringBuilder sb = new StringBuilder();
             

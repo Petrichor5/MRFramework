@@ -15,9 +15,16 @@ MonoBehaviour:
   m_GroupName: Config
   m_Data:
     m_SerializedData: []
-  m_GUID: 9ff14723545809045a3a116cac4e2073
-  m_SerializeEntries: []
+  m_GUID: 3dcc927b99c04664fa86d1d143907d13
+  m_SerializeEntries:
+  - m_GUID: dccab93f707c7314a803f13d8531dd7c
+    m_Address: Assets/AssetPackage/Config/Test
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: acc5f8e266b479a4291337d63a512f39, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: 6de424d53372bd845bc8e63f6a1e7981, type: 2}
+    - {fileID: 11400000, guid: 4ef16785e7594234aabc199d27fdaa79, type: 2}

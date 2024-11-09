@@ -38,7 +38,7 @@ public class ReddotNode : MonoBehaviour
     public void SetReddotData(EReddot eReddot, string node)
     {
         if (m_ReddotKeyList == null) m_ReddotKeyList = new List<string>();
-        string key = ReddotUtil.MKReddotKey(eReddot, node);
+        string key = ReddotTool.MKReddotKey(eReddot, node);
         ReddotManager.Instance.AddEventListener(key, OnRefreshReddot);
         m_ReddotKeyList.Add(key);
     }

@@ -82,7 +82,7 @@ public abstract class ReddotSubManagerBase : IUnRegisterList
     /// </summary>
     public string MKReddotKey(EReddot eReddot, string node)
     {
-        return ReddotUtil.MKReddotKey(eReddot, node);
+        return ReddotTool.MKReddotKey(eReddot, node);
     }
 
     /// <summary>

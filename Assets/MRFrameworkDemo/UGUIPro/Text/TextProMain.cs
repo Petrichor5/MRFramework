@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,27 +11,9 @@ namespace MRFramework.UGUIPro
         public Dropdown dropdown;
         public TextPro mTextPro;
 
-        async void Start()
-        {
-            await LocalizationManager.Instance.InitLanguageConfig();
-        }
-
-
         // Update is called once per frame
         //void Update()
         //{
-        //    if (Input.GetKeyDown(KeyCode.Q))
-        //    {
-        //        LocalizationManager.Instance.SwitchLanguage(LanguageType.Chinese);
-        //    }
-        //    if (Input.GetKeyDown(KeyCode.W))
-        //    {
-        //        LocalizationManager.Instance.SwitchLanguage(LanguageType.English);
-        //    }
-        //    if (Input.GetKeyDown(KeyCode.E))
-        //    {
-        //        LocalizationManager.Instance.SwitchLanguage(LanguageType.Bahasa);
-        //    }
         //    if (Input.GetKeyDown(KeyCode.A))
         //    {
         //        mImagePro.sprite = sprite;

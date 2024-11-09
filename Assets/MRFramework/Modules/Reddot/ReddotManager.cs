@@ -193,7 +193,7 @@ public class ReddotManager : MonoSingleton<ReddotManager>
             }
 
             // 刷新根节点状态
-            string key = ReddotUtil.MKReddotKey(eReddot);
+            string key = ReddotTool.MKReddotKey(eReddot);
             TriggerEventListener(key, flag);
 
             return;
@@ -287,7 +287,7 @@ public class ReddotManager : MonoSingleton<ReddotManager>
     {
         string key;
         if (!string.IsNullOrEmpty(node))
-            key = ReddotUtil.MKReddotKey(eReddot, node);
+            key = ReddotTool.MKReddotKey(eReddot, node);
         else
             key = eReddot.ToString();
         return key;

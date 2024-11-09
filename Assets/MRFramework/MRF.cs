@@ -48,6 +48,8 @@ public class MRF : Architecture<MRF>
     public static ReddotManager ReddotMgr => ReddotManager.Instance;
     public static TimerManager TimerMgr => TimerManager.Instance;
     public static GlobalManager GlobalMgr => GlobalManager.Instance;
+    public static DataManager DataMgr => DataManager.Instance;
+    public static UIDManager UIDMgr => UIDManager.Instance;
 
     #endregion
 

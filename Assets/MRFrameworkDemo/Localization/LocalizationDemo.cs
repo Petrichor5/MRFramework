@@ -1,59 +1,66 @@
-using System;
+using MRFramework.UGUIPro;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+
+public enum ELocaleType
+{
+    Chinese = 0,
+    English = 1,
+}
 
 public class LocalizationDemo : MonoBehaviour
 {
-    //public List<string> ScanLocalizationTextFromDataTables(Action<string, int, int> onProgressUpdate = null)
-    //{
-    //    List<string> keyList = new List<string>();
+    public LocalizedString LocalString;
+    public TextMeshPro Text_Score;
+    private int score;
+    public ButtonPro Button_AddScore;
 
-    //    var tbFullFiles = GameDataGenerator.GetGameDataExcelWithABFiles(GameDataType.DataTable, mainTbFullFiles);//同时扫描AB测试表
-    //    for (int i = 0; i < tbFullFiles.Length; i++)
-    //    {
-    //        var excelFile = tbFullFiles[i];
-    //        var fileInfo = new FileInfo(excelFile);
-    //        if (!fileInfo.Exists) continue;
+    private bool m_Active = false;
+    public ButtonPro Button_Chinese;
+    public ButtonPro Button_English;
 
-    //        onProgressUpdate?.Invoke(excelFile, tbFullFiles.Length, i);
-    //        string tmpExcelFile = UtilityBuiltin.ResPath.GetCombinePath(fileInfo.Directory.FullName, GameFramework.Utility.Text.Format("{0}.temp", fileInfo.Name));
-    //        try
-    //        {
-    //            File.Copy(excelFile, tmpExcelFile, true);
-    //            using (var excelPackage = new ExcelPackage(tmpExcelFile))
-    //            {
-    //                var excelSheet = excelPackage.Workbook.Worksheets.FirstOrDefault();
-    //                if (excelSheet.Dimension.End.Row >= 4)
-    //                {
-    //                    for (int colIndex = excelSheet.Dimension.Start.Column; colIndex <= excelSheet.Dimension.End.Column; colIndex++)
-    //                    {
-    //                        if (excelSheet.GetValue<string>(4, colIndex)?.ToLower() != EXCEL_I18N_TAG)
-    //                        {
-    //                            continue;
-    //                        }
-    //                        for (int rowIndex = 5; rowIndex <= excelSheet.Dimension.End.Row; rowIndex++)
-    //                        {
-    //                            string langKey = excelSheet.GetValue<string>(rowIndex, colIndex);
-    //                            if (string.IsNullOrWhiteSpace(langKey) || keyList.Contains(langKey)) continue;
-    //                            keyList.Add(langKey);
-    //                        }
-    //                    }
+    private void Start()
+    {
+        Button_Chinese.AddButtonClick(() =>
+        {
+            if (m_Active) return;
+            StartCoroutine(SetLocale(ELocaleType.Chinese));
+        });
 
-    //                }
-    //            }
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            Debug.LogError($"扫描数据表本地化文本失败!文件:{excelFile}, Error:{e.Message}");
-    //        }
+        Button_English.AddButtonClick(() =>
+        {
+            if (m_Active) return;
+            StartCoroutine(SetLocale(ELocaleType.English));
+        });
 
-    //        if (File.Exists(tmpExcelFile))
-    //        {
-    //            File.Delete(tmpExcelFile);
-    //        }
-    //    }
-    //    return keyList;
-    //}
+        Button_AddScore.AddButtonClick(() =>
+        {
+            score++;
+            LocalString.Arguments[0] = score;
+            LocalString.RefreshString();
+        });
+
+        SmartString();
+    }
+
+    private void SmartString()
+    {
+        LocalString.Arguments = new object[] { score };
+        LocalString.StringChanged += UpdateText;
+    }
+
+    private void UpdateText(string value)
+    {
+        Text_Score.text = value;
+    }
+
+    private IEnumerator SetLocale(ELocaleType type)
+    {
+        m_Active = true;
+        yield return LocalizationSettings.InitializationOperation;
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)type];
+        m_Active = false;
+    }
 }

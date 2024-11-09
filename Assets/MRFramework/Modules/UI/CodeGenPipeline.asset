@@ -16,27 +16,18 @@ MonoBehaviour:
     Obj: {fileID: 0}
     Binds:
     - Obj: {fileID: 0}
-      InstanceID: 40966
-      MemberName: Button_Tips
+      InstanceID: 56142
+      MemberName: Button_Level
       TypeName: ButtonPro
     - Obj: {fileID: 0}
-      InstanceID: 41008
-      MemberName: Button_Close
-      TypeName: ButtonPro
-    - Obj: {fileID: 0}
-      InstanceID: -26130
-      MemberName: Image_Lock
+      InstanceID: -100526
+      MemberName: Image_Towers
       TypeName: ImagePro
-    - Obj: {fileID: 0}
-      InstanceID: 41022
-      MemberName: Button_Start
-      TypeName: ButtonPro
     ScriptNamespace: 
-    ScriptName: WBP_Level_Main
+    ScriptName: WBP_Level_ItemSV
     PanelViewFolder: Assets\Scripts\UI\Level\View
     PanelFolder: Assets\Scripts\UI\Level
     PanelViewCode: "using MRFramework;\r\nusing UnityEngine;\r\nusing UnityEngine.Rendering;\r\nusing
-      MRFramework.UGUIPro;\r\n\r\npublic partial class WBP_Level_Main\r\n{\r\n\tpublic
-      ButtonPro Button_Tips;\r\n\tpublic ButtonPro Button_Close;\r\n\tpublic ImagePro
-      Image_Lock;\r\n\tpublic ButtonPro Button_Start;\r\n\r\n}\r\n"
+      MRFramework.UGUIPro;\r\n\r\npublic partial class WBP_Level_ItemSV\r\n{\r\n\tpublic
+      ButtonPro Button_Level;\r\n\tpublic ImagePro Image_Towers;\r\n\r\n}\r\n"
     PanelCode: 

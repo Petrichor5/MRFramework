@@ -21,8 +21,8 @@ namespace MRFramework.UGUIPro
         {
             GridLayoutGroup group = content.gameObject.GetComponent<GridLayoutGroup>();
 
-            m_ItemWidth = group.cellSize.x;
-            m_ItemHeight = group.cellSize.y;
+            m_ItemWidth = group.cellSize.x * ItemScaleX;
+            m_ItemHeight = group.cellSize.y * ItemScaleY;
 
             m_ItemOffsetX = group.spacing.x;
             m_ItemOffsetY = group.spacing.y;

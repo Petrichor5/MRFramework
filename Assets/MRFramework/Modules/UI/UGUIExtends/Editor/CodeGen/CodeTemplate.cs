@@ -37,7 +37,8 @@ namespace MRFramework
             writer.AppendLine("using MRFramework;");
             writer.AppendLine();
 
-            writer.AppendLine($"public partial class {task.ScriptName} : PanelBase");
+            string panleType = task.ScriptName.EndsWith("SV") ? "SubPanel" : "MainPanel";
+            writer.AppendLine($"public partial class {task.ScriptName} : {panleType}");
             writer.AppendLine("{");
             
             // OnFirstOpen

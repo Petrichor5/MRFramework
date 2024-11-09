@@ -36,6 +36,10 @@
             // 列表
             else if (objName.StartsWith("List_"))
             {
+                result = "ScrollListPro";
+            }
+            else if (objName.StartsWith("Grid_"))
+            {
                 result = "ScrollViewPro";
             }
 

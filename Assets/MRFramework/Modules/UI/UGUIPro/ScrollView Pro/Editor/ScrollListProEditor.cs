@@ -11,6 +11,8 @@ namespace MRFramework.UGUIPro
         private SerializedProperty m_ScrollType;
         private SerializedProperty m_ItemWidth;
         private SerializedProperty m_ItemHeight;
+        private SerializedProperty m_ItemScaleX;
+        private SerializedProperty m_ItemScaleY;
 
         protected override void OnEnable()
         {
@@ -19,6 +21,8 @@ namespace MRFramework.UGUIPro
             m_ScrollType = serializedObject.FindProperty("ScrollType");
             m_ItemWidth = serializedObject.FindProperty("ItemWidth");
             m_ItemHeight = serializedObject.FindProperty("ItemHeight");
+            m_ItemScaleX = serializedObject.FindProperty("ItemScaleX");
+            m_ItemScaleY = serializedObject.FindProperty("ItemScaleY");
         }
 
         public override void OnInspectorGUI()
@@ -30,6 +34,8 @@ namespace MRFramework.UGUIPro
             EditorGUILayout.PropertyField(m_ScrollType, new GUIContent("ScrollType"));
             EditorGUILayout.PropertyField(m_ItemWidth, new GUIContent("ItemWidth"));
             EditorGUILayout.PropertyField(m_ItemHeight, new GUIContent("ItemHeight"));
+            EditorGUILayout.PropertyField(m_ItemScaleX, new GUIContent("ItemScaleX"));
+            EditorGUILayout.PropertyField(m_ItemScaleY, new GUIContent("ItemScaleY"));
 
             serializedObject.ApplyModifiedProperties();
         }

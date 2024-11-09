@@ -21,14 +21,14 @@ namespace MRFramework.UGUIPro
         protected override void InitHorizontal()
         {
             HorizontalLayoutGroup group = content.gameObject.GetComponent<HorizontalLayoutGroup>();
-            m_ItemWidth = ItemWidth;
+            m_ItemWidth = ItemWidth * ItemScaleX;
             m_ItemOffsetX = group.spacing + group.padding.left;
         }
 
         protected override void InitVertical()
         {
             VerticalLayoutGroup group = content.gameObject.GetComponent<VerticalLayoutGroup>();
-            m_ItemHeight = ItemHeight;
+            m_ItemHeight = ItemHeight * ItemScaleY;
             m_ItemOffsetY = group.spacing + group.padding.top;
         }
 

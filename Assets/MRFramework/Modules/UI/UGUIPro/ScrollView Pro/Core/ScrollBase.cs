@@ -13,8 +13,15 @@ namespace MRFramework.UGUIPro
     {
         [Header("Item预制体")]
         public AssetReferenceGameObject ItemPrefab;
+
         [Header("滚动方向类型")]
         public EScrollType ScrollType;
+
+        [Header("Item缩放X")]
+        public float ItemScaleX = 1;
+
+        [Header("Item缩放Y")]
+        public float ItemScaleY = 1;
 
         private CanvasGroup m_CanvasGroup;
         private bool m_IsVisible;

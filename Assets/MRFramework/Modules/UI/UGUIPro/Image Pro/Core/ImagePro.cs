@@ -43,7 +43,7 @@ namespace MRFramework.UGUIPro
         /// 设置精灵图片
         /// </summary>
         /// <param name="key">资源的Key</param>
-        public void SetSprite(string key)
+        public void SetSprite(string key, bool setNativeSize = false)
         {
             // 相同的图片不做处理
             if (m_SpriteAssetKey == key) return;
@@ -52,6 +52,8 @@ namespace MRFramework.UGUIPro
             AssetManager.Instance.LoadAssetAsync<Sprite>(key, (result) =>
             {
                 this.sprite = result;
+                if (setNativeSize)
+                    SetNativeSize();
             });
         }
 

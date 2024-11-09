@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MRFramework
@@ -123,6 +122,15 @@ namespace MRFramework
                         case "string[]":
                             rowData[columnName] = new JArray(ConfigTool.GetList<string>(content, ','));
                             break;
+                        case "List<int>":
+                            rowData[columnName] = new JArray(ConfigTool.GetList<int>(content, ','));
+                            break;
+                        case "List<float>":
+                            rowData[columnName] = new JArray(ConfigTool.GetList<float>(content, ','));
+                            break;
+                        case "List<string>":
+                            rowData[columnName] = new JArray(ConfigTool.GetList<string>(content, ','));
+                            break;
                         case "Vector2":
                             rowData[columnName] = ConfigTool.GetVectorValue(content, ',');
                             break;
@@ -130,7 +138,8 @@ namespace MRFramework
                             rowData[columnName] = ConfigTool.GetVectorValue(content, ',');
                             break;
                         default:
-                            Debug.LogError($"该类型暂不支持 Type: {rowType[j]}");
+                            if (!string.IsNullOrEmpty(columnName))
+                                rowData[columnName] = content;
                             break;
                     }
                 }
@@ -202,7 +211,10 @@ namespace MRFramework
                 }
                 if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(value))
                 {
-                    sb.AppendLine($"\t\t{name} = {value}, // {desc}");
+                    sb.AppendLine($"\t\t/// <summary>");
+                    sb.AppendLine($"\t\t/// {desc}");
+                    sb.AppendLine($"\t\t/// <summary>");
+                    sb.AppendLine($"\t\t{name} = {value},");
                 }
             }
             

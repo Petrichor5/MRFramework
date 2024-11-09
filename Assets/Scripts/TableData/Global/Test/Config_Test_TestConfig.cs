@@ -1,6 +1,6 @@
 /*******************************
  * Desc: 以下代码为导表工具自动化生成，请不要手动更改。
- * Date: 2024-11-09 01:53:31
+ * Date: 2024-11-10 06:37:34
  *******************************/ 
 
 using System.Text;
@@ -19,6 +19,7 @@ namespace Config
 		public int[] IntArrayTest;
 		public string[] StringArrayTest;
 		public float[] FloatArrayTest;
+		public List<int> ListInt;
 		public Vector2 BuildPos1;
 		public Vector3 BuildPos2;
 
@@ -33,6 +34,7 @@ namespace Config
 			sb.AppendLine("IntArrayTest: " + IntArrayTest.ToString());
 			sb.AppendLine("StringArrayTest: " + StringArrayTest.ToString());
 			sb.AppendLine("FloatArrayTest: " + FloatArrayTest.ToString());
+			sb.AppendLine("ListInt: " + ListInt.ToString());
 			sb.AppendLine("BuildPos1: " + BuildPos1.ToString());
 			sb.AppendLine("BuildPos2: " + BuildPos2.ToString());
 			return sb.ToString();

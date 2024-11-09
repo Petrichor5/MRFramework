@@ -1,5 +1,6 @@
 using Config;
 using MRFramework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Test
@@ -40,6 +41,7 @@ public class ConfigDemo : MonoBehaviour
         int[] ints = config.IntArrayTest;
         float[] floats = config.FloatArrayTest;
         string[] strings = config.StringArrayTest;
+        List<int> listInt = config.ListInt;
         Vector2 buildPos1 = config.BuildPos1;
         Vector3 buildPos2 = config.BuildPos2;
 
@@ -51,6 +53,15 @@ public class ConfigDemo : MonoBehaviour
         // 获取整个配置表
         var configTable = ConfigManager.Instance.GetConfig<Config_Test_TestConfig>();
         foreach (var item in configTable.Values)
+        {
+            Debug.Log(item.ToString());
+            Debug.Log(item.ListInt[0]);
+        }
+
+
+
+        var unlockConfig = ConfigManager.Instance.GetConfig<Config_Unlock_Unlock>();
+        foreach (var item in unlockConfig.Values)
         {
             Debug.Log(item.ToString());
         }

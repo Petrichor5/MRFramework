@@ -1,15 +1,19 @@
 /*******************************
  * Desc: 以下代码为导表工具自动化生成，请不要手动更改。
- * Date: 2024-11-10 07:21:08
+ * Date: 2024-11-10 07:26:53
  *******************************/ 
 
 namespace Config
 {
-	public enum EReddot
+	public enum EUnlockType
 	{
 		/// <summary>
-		/// 测试红点
+		/// 玩家等级达到X级
 		/// <summary>
-		ETestReddot = 1,
+		EPlayerLevel = 1,
+		/// <summary>
+		/// 通关第X关
+		/// <summary>
+		ELevelUnlock = 2,
 	}
 }

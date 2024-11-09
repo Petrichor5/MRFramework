@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 3dcc927b99c04664fa86d1d143907d13
   m_SerializeEntries:
+  - m_GUID: 743c4cdadbe62434d8a5b3d1fdca5010
+    m_Address: Assets/AssetPackage/Config/Unlock
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dccab93f707c7314a803f13d8531dd7c
     m_Address: Assets/AssetPackage/Config/Test
     m_ReadOnly: 0

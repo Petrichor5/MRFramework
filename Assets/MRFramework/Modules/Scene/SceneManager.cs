@@ -70,6 +70,9 @@ namespace MRFramework
             var lastLoadHandle = m_CurrentLoadHandle;
             m_CurrentScenePath = scenePath;
 
+            // 卸载当前场景前执行回调
+            beforeUnload?.Invoke();
+
             // 1. 尝试加载新场景但不激活
             m_CurrentLoadHandle = Addressables.LoadSceneAsync(scenePath, LoadSceneMode.Single, false);
 
@@ -103,12 +106,9 @@ namespace MRFramework
             // 2. 卸载当前场景
             if (!string.IsNullOrEmpty(m_LastScenePath) && m_CurrentLoadHandle.IsValid())
             {
-                // 卸载当前场景前执行回调
-                beforeUnload?.Invoke();
-                
                 // 派发退出场景事件
                 EventManager.Instance.TriggerEventListener(SceneEvent.ExitScene, lastLoadHandle.Result.Scene.name);
-                
+
                 var unloadHandle = Addressables.UnloadSceneAsync(lastLoadHandle);
                 while (!unloadHandle.IsDone)
                     yield return null;

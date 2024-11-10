@@ -5,7 +5,6 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace MRFramework
 {
@@ -120,10 +119,12 @@ namespace MRFramework
                 AsyncOperation asyncOperation = m_CurrentLoadHandle.Result.ActivateAsync();
                 asyncOperation.completed += (ao) =>
                 {
-                    UIManager.Instance.ClosePanel<WBP_GlobalUI_SceneProgressBar>();
                     onSceneLoaded?.Invoke();
+
                     // 派发进入场景事件
                     EventManager.Instance.TriggerEventListener(SceneEvent.EnterScene, m_CurrentLoadHandle.Result.Scene.name);
+
+                    UIManager.Instance.ClosePanel<WBP_GlobalUI_SceneProgressBar>();
                 };
             }
             else

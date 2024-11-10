@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace MRFramework
 {
@@ -31,14 +30,14 @@ namespace MRFramework
 
             m_UIAssetManager = new UIAssetManager();
             m_UIAssetManager.Init(m_UIRoot);
-            
+
             m_AllPanelDic = new Dictionary<string, PanelBase>();
             m_AllPanelList = new List<PanelBase>();
             m_VisiblePanelList = new List<PanelBase>();
             m_PanelStack = new Queue<PanelBase>();
         }
 
-        private void OnDestroy()
+        public void Clear()
         {
             DestroyAllPanel();
             m_UIAssetManager.OnDispose();
@@ -74,7 +73,7 @@ namespace MRFramework
                 if (panel != null)
                 {
                     T panelBase = panel.GetComponent<T>();
-                    
+
                     // 初始化设置
                     panelBase.Canvas = panel.GetComponent<Canvas>();
                     panelBase.Canvas.worldCamera = m_UICamera;
@@ -116,14 +115,14 @@ namespace MRFramework
                 callback?.Invoke(wnd as T);
                 return;
             }
-            
+
             InitializePanel(panelName, (PanelBase panelBase) =>
             {
                 Log.Info("[UIManager] 打开面板 PanelName: " + panelName);
                 callback?.Invoke(panelBase as T);
             });
         }
-        
+
         /// <summary>
         /// 关闭面板
         /// </summary>
@@ -141,7 +140,7 @@ namespace MRFramework
         {
             ClosePanel(typeof(T).Name);
         }
-        
+
         /// <summary>
         /// 销毁面板
         /// </summary>
@@ -154,28 +153,41 @@ namespace MRFramework
         /// <summary>
         /// 销毁面板
         /// </summary>
-        public void DestroyWinodw<T>() where T : PanelBase
+        public void DestroyPanel<T>() where T : PanelBase
         {
             DestroyPanel(typeof(T).Name);
         }
-        
+
         /// <summary>
         /// 销毁所有面板
         /// </summary>
-        /// <param name="filterlist">过滤面板列表：过滤掉不销毁的面板</param>
-        public void DestroyAllPanel(List<string> filterlist = null)
+        /// <param name="filterList">过滤面板列表：过滤掉不销毁的面板</param>
+        public void DestroyAllPanel(List<string> filterList = null)
         {
+            Dictionary<string, bool> filterPanleDic = null;
+            if (filterList != null)
+            {
+                filterPanleDic = new Dictionary<string, bool>();
+                foreach (var panelName in filterList)
+                {
+                    filterPanleDic.Add(panelName, true);
+                }
+            }
+
             for (int i = 0; i < m_AllPanelList.Count; i++)
             {
                 var panel = m_AllPanelList[i];
-                if (panel == null || (filterlist != null && filterlist.Contains(panel.Name)))
+                if (panel == null || (filterPanleDic != null && filterPanleDic.ContainsKey(panel.Name)))
                 {
                     continue;
                 }
-                DestroyPanel(panel.Name);
+                // 不要在列表遍历时移除列表项
+                DestoryPanel(panel, true);
             }
+            // 遍历完后再清空
+            m_AllPanelList.Clear();
         }
-        
+
         /// <summary>
         /// 获取已经弹出的面板
         /// </summary>
@@ -203,7 +215,7 @@ namespace MRFramework
         /// </summary>
         public void GetSubPanel()
         {
-            
+
         }
 
         /// <summary>
@@ -211,15 +223,15 @@ namespace MRFramework
         /// </summary>
         public void GetSubPanelFormPool()
         {
-            
+
         }
-        
+
         /// <summary>
         /// 把子面板回收进对象池
         /// </summary>
         public void ReturnSubPanelToPool()
         {
-            
+
         }
 
         #endregion
@@ -250,7 +262,7 @@ namespace MRFramework
                 if (panel != null)
                 {
                     PanelBase panelBase = panel.GetComponent<PanelBase>();
-                    
+
                     // 初始化设置
                     panelBase.Canvas = panel.GetComponent<Canvas>();
                     panelBase.Canvas.worldCamera = m_UICamera;
@@ -288,7 +300,7 @@ namespace MRFramework
             {
                 // 移除计时销毁面板
                 TimerManager.Instance.RemoveTimer(panel.DestroyTimerID);
-                
+
                 if (panel.gameObject != null && panel.Visible == false)
                 {
                     m_VisiblePanelList.Add(panel);
@@ -302,7 +314,7 @@ namespace MRFramework
             }
             else
             {
-                Log.Error("[UIManager] " +  panelName + " 面板不存在，请调用 OpenPanel 打开面板");
+                Log.Error("[UIManager] " + panelName + " 面板不存在，请调用 OpenPanel 打开面板");
             }
 
             return null;
@@ -316,9 +328,9 @@ namespace MRFramework
                 panel.SetVisible(false);
                 SetWidnowMaskVisible();
                 panel.OnClose();
-                
+
                 // 计时销毁面板
-                panel.DestroyTimerID = TimerManager.Instance.AddTimer(UIDefine.PanelDiposeTime, () => { 
+                panel.DestroyTimerID = TimerManager.Instance.AddTimer(UIDefine.PanelDiposeTime, () => {
                     DestoryPanel(panel);
                 });
             }
@@ -327,19 +339,22 @@ namespace MRFramework
             PopNextStackPanel(panel);
         }
 
-        private void DestoryPanel(PanelBase panel)
+        private void DestoryPanel(PanelBase panel, bool isWaitRemove = false)
         {
             if (panel != null)
             {
                 Log.Info("[UIManager] 销毁面板 PanelName: " + panel.Name);
-                
+
                 // 移除计时销毁面板
                 TimerManager.Instance.RemoveTimer(panel.DestroyTimerID);
-                
+
                 if (m_AllPanelDic.ContainsKey(panel.Name))
                 {
                     m_AllPanelDic.Remove(panel.Name);
-                    m_AllPanelList.Remove(panel);
+                    if (!isWaitRemove)
+                    {
+                        m_AllPanelList.Remove(panel);
+                    }
                     m_VisiblePanelList.Remove(panel);
                 }
 
@@ -347,14 +362,14 @@ namespace MRFramework
                 SetWidnowMaskVisible();
                 panel.OnClose();
                 panel.OnDispose();
-                
+
                 m_UIAssetManager.DestroyPanel(panel.Name);
 
                 // 在出栈的情况下，上一个界面隐藏时，自动打开栈中的下一个界面
                 PopNextStackPanel(panel);
             }
         }
-        
+
         private PanelBase GetPanel(string winName)
         {
             if (m_AllPanelDic.ContainsKey(winName))

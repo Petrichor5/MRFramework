@@ -1,10 +1,74 @@
 {
   "1": {
-    "UnlockType": "1",
-    "ValueInt": 1
+    "EUnlockID": "1",
+    "EUnlockType": "1002",
+    "LockDesc": "通关第0关",
+    "ValueInt": 0
   },
   "2": {
-    "UnlockType": "2",
-    "ValueInt": 2
+    "EUnlockID": "2",
+    "EUnlockType": "1002",
+    "LockDesc": "通关第1关",
+    "ValueInt": 1
+  },
+  "3": {
+    "EUnlockID": "3",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "4": {
+    "EUnlockID": "4",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "5": {
+    "EUnlockID": "5",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "6": {
+    "EUnlockID": "6",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "7": {
+    "EUnlockID": "7",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "8": {
+    "EUnlockID": "8",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "9": {
+    "EUnlockID": "9",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "10": {
+    "EUnlockID": "10",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "11": {
+    "EUnlockID": "11",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
+  },
+  "12": {
+    "EUnlockID": "12",
+    "EUnlockType": "1001",
+    "LockDesc": "玩家等级达到999级",
+    "ValueInt": 999
   }
 }

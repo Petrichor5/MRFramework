@@ -1,52 +1,35 @@
 using Config;
+using MRFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 
-public class ReddotEventHandler
+/// <summary>
+/// 红点系统
+/// </summary>
+public class ReddotSystem : ASystem
 {
-    private Action<bool> m_OnEvent;
-
-    public void Register(Action<bool> onEvent)
-    {
-        m_OnEvent += onEvent;
-    }
-
-    public void UnRegister(Action<bool> onEvent)
-    {
-        m_OnEvent -= onEvent;
-    }
-
-    public void Clear()
-    {
-        m_OnEvent = null;
-    }
-
-    public void Trigger(bool flag)
-    {
-        m_OnEvent?.Invoke(flag);
-    }
-}
-
-[MonoSingletonPath("MRFramework/ReddotManager")]
-public class ReddotManager : MonoSingleton<ReddotManager>
-{
-    private Dictionary<string, ReddotSubManagerBase> m_ReddotSubManagerDic;
+    private Dictionary<string, ReddotSubSystemBase> m_ReddotSubManagerDic;
     private Dictionary<EReddot, Dictionary<string, bool>> m_ReddotTree;
     private Dictionary<string, ReddotEventHandler> m_ReddotEventDic;
 
-    public override void OnSingletonInit()
+    protected override void OnInit()
     {
-        m_ReddotSubManagerDic = new Dictionary<string, ReddotSubManagerBase>();
+        m_ReddotSubManagerDic = new Dictionary<string, ReddotSubSystemBase>();
         m_ReddotTree = new Dictionary<EReddot, Dictionary<string, bool>>();
         m_ReddotEventDic = new Dictionary<string, ReddotEventHandler>();
+    }
+
+    protected override void OnDispose()
+    {
+        
     }
 
     /// <summary>
     /// 注册红点子管理器
     /// </summary>
-    public void RegisterReddotManager<T>() where T : ReddotSubManagerBase, new()
+    public void RegisterReddotManager<T>() where T : ReddotSubSystemBase, new()
     {
         T subMgr = new T();
         string name = typeof(T).Name;
@@ -65,7 +48,7 @@ public class ReddotManager : MonoSingleton<ReddotManager>
     /// <summary>
     /// 注销红点子管理器
     /// </summary>
-    public void UnRegisterReddotManager<T>() where T : ReddotSubManagerBase, new()
+    public void UnRegisterReddotManager<T>() where T : ReddotSubSystemBase, new()
     {
         string name = typeof(T).Name;
 
@@ -84,7 +67,7 @@ public class ReddotManager : MonoSingleton<ReddotManager>
     /// <summary>
     /// 注册红点子管理器
     /// </summary>
-    public T GetReddotManager<T>() where T : ReddotSubManagerBase
+    public T GetReddotManager<T>() where T : ReddotSubSystemBase
     {
         string name = typeof(T).Name;
         m_ReddotSubManagerDic.TryGetValue(name, out var subMgr);

@@ -1,6 +1,6 @@
 /*******************************
  * Desc: 以下代码为导表工具自动化生成，请不要手动更改。
- * Date: 2024-11-10 07:26:53
+ * Date: 2024-11-10 20:08:15
  *******************************/ 
 
 namespace Config
@@ -10,10 +10,10 @@ namespace Config
 		/// <summary>
 		/// 玩家等级达到X级
 		/// <summary>
-		EPlayerLevel = 1,
+		EPlayerLevelType = 1001,
 		/// <summary>
 		/// 通关第X关
 		/// <summary>
-		ELevelUnlock = 2,
+		ELevelUnlockType = 1002,
 	}
 }

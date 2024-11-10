@@ -4,7 +4,7 @@ using MRFramework.UGUIPro;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReddotNode : MonoBehaviour
+public class ReddotNode : MonoBehaviour, ICanGetSystem
 {
     public ImagePro Reddot;
 
@@ -19,6 +19,11 @@ public class ReddotNode : MonoBehaviour
     private void OnDestroy()
     {
         Clear();
+    }
+
+    public IArchitecture GetArchitecture()
+    {
+        return MRF.Instance;
     }
 
     /// <summary>
@@ -39,7 +44,7 @@ public class ReddotNode : MonoBehaviour
     {
         if (m_ReddotKeyList == null) m_ReddotKeyList = new List<string>();
         string key = ReddotTool.MKReddotKey(eReddot, node);
-        ReddotManager.Instance.AddEventListener(key, OnRefreshReddot);
+        this.GetSystem<ReddotSystem>().AddEventListener(key, OnRefreshReddot);
         m_ReddotKeyList.Add(key);
     }
 
@@ -50,7 +55,7 @@ public class ReddotNode : MonoBehaviour
 
     private void Clear()
     {
-        ReddotManager reddotMgr = ReddotManager.Instance;
+        ReddotSystem reddotMgr = this.GetSystem<ReddotSystem>();
         foreach (var key in m_ReddotKeyList)
         {
             reddotMgr.RemoveEventListener(key, OnRefreshReddot);

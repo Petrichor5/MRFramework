@@ -1,7 +1,5 @@
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace MRFramework.UGUIPro
@@ -11,7 +9,7 @@ namespace MRFramework.UGUIPro
         [MenuItem("GameObject/UI/UGUI Pro/Text Pro", priority = 0)]
         public static void CreateTextPro()
         {
-            GameObject root = new GameObject("Text Pro", typeof(RectTransform), typeof(TextPro), typeof(LocalizeStringEvent), typeof(CanvasGroup));
+            GameObject root = new GameObject("Text Pro", typeof(RectTransform), typeof(TextPro), typeof(CanvasGroup));
             ResetInCanvasFor((RectTransform)root.transform);
             
             root.GetComponent<TextPro>().text = "Text Pro";
@@ -23,9 +21,6 @@ namespace MRFramework.UGUIPro
             text.fontSize = 24;
             text.material = new Material(Shader.Find("TextPro/Text"));
             text.alignment = TextAnchor.MiddleCenter;
-
-            LocalizeStringEvent localizeStringEvent = root.GetComponent<LocalizeStringEvent>();
-            localizeStringEvent.SetTable(UIProSettings.i18NTableName);
 
             root.transform.localPosition = Vector3.zero;
         }

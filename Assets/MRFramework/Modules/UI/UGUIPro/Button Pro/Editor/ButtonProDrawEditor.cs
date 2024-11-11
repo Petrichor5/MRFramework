@@ -1,7 +1,5 @@
-using System.Security.Permissions;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
  namespace MRFramework.UGUIPro
@@ -16,7 +14,7 @@ using UnityEngine.UI;
             RectTransform buttonProRectTrans = button.GetComponent<RectTransform>();
 	        ResetInCanvasFor((RectTransform)buttonProRectTrans.transform);
 	        
-	        TextMeshPro text = new GameObject("TextMesh Pro", typeof(RectTransform), typeof(TextMeshPro), typeof(LocalizeStringEvent)).GetComponent<TextMeshPro>();
+	        TextMeshPro text = new GameObject("TextMesh Pro", typeof(RectTransform), typeof(TextMeshPro)).GetComponent<TextMeshPro>();
 	        text.transform.SetParent(buttonProRectTrans);
 	        text.transform.localPosition = Vector3.zero;
 	        text.transform.localScale = Vector3.one;
@@ -30,9 +28,6 @@ using UnityEngine.UI;
             RectTransform textRT = text.GetComponent<RectTransform>();
             textRT.anchorMin = Vector3.zero;
             textRT.anchorMax = Vector3.one;
-
-            LocalizeStringEvent localizeStringEvent = text.GetComponent<LocalizeStringEvent>();
-            localizeStringEvent.SetTable(UIProSettings.i18NTableName);
 
             buttonProRectTrans.sizeDelta = text.rectTransform.sizeDelta = new Vector2(163,50);
 	        buttonProRectTrans.localPosition = Vector3.zero;

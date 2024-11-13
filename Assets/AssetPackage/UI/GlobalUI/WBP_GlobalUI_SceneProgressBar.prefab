@@ -531,10 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 741cdab7c10f4f140b46a5812d69a588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 0}
-  UIMask: {fileID: 0}
-  CanvasGroup: {fileID: 0}
-  UIContent: {fileID: 0}
+  DestroyTimerID: 0
   DiposeTimerID: 0
   Slider_Progress: {fileID: 896572491087726397}
 --- !u!1 &9083380859381968259

@@ -11,6 +11,7 @@ namespace MRFramework.UGUIPro
         [SerializeField] VertexColorExtend m_VertexColorExtend = new VertexColorExtend();
         [SerializeField] TextShadowExtend m_TextShadowExtend = new TextShadowExtend();
         [SerializeField] TextOutlineExtend m_TextOutlineExtend = new TextOutlineExtend();
+        [SerializeField] LocalizationTextExtend m_LocalizationTextExtend = new LocalizationTextExtend();
         [SerializeField] TextEffectExtend m_TextEffectExtend = new TextEffectExtend();
 
         public TextSpacingExtend TextSpacingExtend
@@ -33,9 +34,49 @@ namespace MRFramework.UGUIPro
             get { return m_TextOutlineExtend; }
         }
 
+        public LocalizationTextExtend LocalizationTextExtend
+        {
+            get { return m_LocalizationTextExtend; }
+        }
+
         public TextEffectExtend TextEffectExtend
         {
             get { return m_TextEffectExtend; }
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (LocalizationTextExtend.UseLocalization)
+                LocalizationTextExtend.Initializa(this);
+
+            m_LocalizationTextExtend.UpdateFont();
+
+            if (LocalizationTextExtend.ChangeFont)
+                LocalizationTextExtend.InitFontListener(this);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            m_LocalizationTextExtend.UpdateFont();
+            m_LocalizationTextExtend.UpdateText();
+
+            //WindowBehaviour.PopWindowListener+= OnWindowShow;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            //WindowBehaviour.PopWindowListener -= OnWindowShow;
+            if (LocalizationTextExtend.UseLocalization)
+                LocalizationTextExtend.Release();
+
+            if (LocalizationTextExtend.ChangeFont)
+                LocalizationTextExtend.RemoveFontListener();
         }
 
         protected override void OnPopulateMesh(VertexHelper toFill)

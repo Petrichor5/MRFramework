@@ -18,15 +18,19 @@ namespace MRFramework.UGUIPro
 
         private static bool m_LocalizationTextPanelOpen = false;
 
+        private string[] titles_E = { "多语言" };
         private string[] titles_C = { "LocalizationText", };
 
-        SerializedProperty m_Text;
-        SerializedProperty m_FontData;
+        private SerializedProperty m_Text;
+        private SerializedProperty m_FontData;
 
 
         //Localization
-        SerializedProperty m_UseLocalization;
-        SerializedProperty m_Key;
+        private SerializedProperty m_UseLocalization;
+        private SerializedProperty m_Key;
+
+        private SerializedProperty m_RaycastTargetProp;
+        private SerializedProperty m_MaskableProp;
 
 
         protected override void OnEnable()
@@ -66,6 +70,13 @@ namespace MRFramework.UGUIPro
             //EditorGUILayout.ObjectField("Graphic", ((TextEffect)m_TextEffect.objectReferenceValue).TextGraphic, typeof(Text), false);
             GUI.enabled = true;
 
+            TextMeshProDrawEditor.LocalizationGUI(
+                GetTitle(0),
+                ref m_LocalizationTextPanelOpen,
+                0f,
+                m_UseLocalization,
+                m_Key
+            );
 
             if (GUI.changed)
             {
@@ -73,9 +84,10 @@ namespace MRFramework.UGUIPro
             }
         }
 
-        SerializedProperty m_RaycastTargetProp;
-        private SerializedProperty m_MaskableProp;
-
+        private string GetTitle(int index)
+        {
+            return UGUIProSetting.EditorLanguageType == 0 ? titles_E[index] : titles_C[index];
+        }
 
         protected override void DrawExtraSettings()
         {

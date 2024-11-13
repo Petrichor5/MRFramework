@@ -16,6 +16,10 @@ namespace MRFramework.UGUIPro
         private static bool m_LocalizationTextPanelOpen = false;
         private static bool m_TextEffectPanelOpen = false;
 
+        private string[] titles_E = { "字符间距", "顶点颜色", "阴影", "多语言", "描边&渐变" };
+
+        private string[] titles_C = { "Text Spacing", "Vertex Color", "Shadow", "LocalizationText", "Outline & Gradient" };
+
         SerializedProperty m_Text;
         SerializedProperty m_FontData;
 
@@ -39,6 +43,11 @@ namespace MRFramework.UGUIPro
         SerializedProperty m_ShadowColorBottomLeft;
         SerializedProperty m_ShadowColorBottomRight;
         SerializedProperty m_ShadowEffectDistance;
+
+        //Localization
+        SerializedProperty m_UseLocalization;
+        SerializedProperty m_Key;
+        SerializedProperty m_ChangeFont;
 
         //TextEffect
         SerializedProperty m_UseTextEffect;
@@ -88,6 +97,11 @@ namespace MRFramework.UGUIPro
             m_ShadowColorBottomRight = serializedObject.FindProperty("m_TextShadowExtend.m_ShadowColorBottomRight");
             m_ShadowEffectDistance = serializedObject.FindProperty("m_TextShadowExtend.m_EffectDistance");
 
+            //Localization
+            m_UseLocalization = serializedObject.FindProperty("m_LocalizationTextExtend.m_UseLocalization");
+            m_Key = serializedObject.FindProperty("m_LocalizationTextExtend.m_Key");
+            m_ChangeFont = serializedObject.FindProperty("m_LocalizationTextExtend.m_ChangeFont");
+
             //TextEffect
             m_UseTextEffect = serializedObject.FindProperty("m_TextEffectExtend.m_UseTextEffect");
             m_Alpha = this.serializedObject.FindProperty("m_TextEffectExtend.m_Alpha");
@@ -135,10 +149,10 @@ namespace MRFramework.UGUIPro
 
             GUI.enabled = true;
 
-            TextProDrawEditor.TextSpacingGUI("字符间距", m_UseTextSpacing, m_TextSpacing, ref m_TextSpacingPanelOpen);
+            TextProDrawEditor.TextSpacingGUI(GetTitle(0), m_UseTextSpacing, m_TextSpacing, ref m_TextSpacingPanelOpen);
 
             TextProDrawEditor.VertexColorGUI(
-                "顶点颜色",
+                GetTitle(1),
                 m_UseVertexColor,
                 m_VertexTopLeft,
                 m_VertexTopRight,
@@ -150,7 +164,7 @@ namespace MRFramework.UGUIPro
             );
 
             TextProDrawEditor.TextShadowGUI(
-                "阴影",
+                GetTitle(2),
                 m_UseShadow,
                 m_ShadowColorTopLeft,
                 m_ShadowColorTopRight,
@@ -160,7 +174,16 @@ namespace MRFramework.UGUIPro
                 ref m_TextShadowPanelOpen
             );
 
-            TextProDrawEditor.TextEffectGUI("描边&渐变", m_UseTextEffect, ref m_TextEffectPanelOpen,
+            TextProDrawEditor.LocalizationGUI(
+                GetTitle(3),
+                ref m_LocalizationTextPanelOpen,
+                0f,
+                m_UseLocalization,
+                m_Key,
+                m_ChangeFont
+            );
+
+            TextProDrawEditor.TextEffectGUI(GetTitle(4), m_UseTextEffect, ref m_TextEffectPanelOpen,
                 m_GradientType,
                 m_TopColor,
                 m_OpenShaderOutLine,
@@ -185,6 +208,11 @@ namespace MRFramework.UGUIPro
                 EditorPrefs.SetBool("UGUIPro.m_LocalizationTextPanelOpen", m_LocalizationTextPanelOpen);
                 EditorPrefs.SetBool("UGUIPro.m_TextEffectPanelOpen", m_TextEffectPanelOpen);
             }
+        }
+
+        private string GetTitle(int index)
+        {
+            return UGUIProSetting.EditorLanguageType == 0 ? titles_E[index] : titles_C[index];
         }
     }
 }

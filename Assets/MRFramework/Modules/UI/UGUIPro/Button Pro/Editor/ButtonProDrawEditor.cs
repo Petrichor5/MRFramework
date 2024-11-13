@@ -14,26 +14,27 @@ using UnityEngine.UI;
             RectTransform buttonProRectTrans = button.GetComponent<RectTransform>();
 	        ResetInCanvasFor((RectTransform)buttonProRectTrans.transform);
 	        
-	        TextMeshPro text = new GameObject("TextMesh Pro", typeof(RectTransform), typeof(TextMeshPro)).GetComponent<TextMeshPro>();
+	        TextPro text = new GameObject("Text Pro", typeof(RectTransform), typeof(TextPro)).GetComponent<TextPro>();
 	        text.transform.SetParent(buttonProRectTrans);
 	        text.transform.localPosition = Vector3.zero;
 	        text.transform.localScale = Vector3.one;
 	        text.transform.rotation = Quaternion.identity;
 	        text.color = Color.black;
 	        text.text = "Button Pro";
-	        text.fontSize = 36;
-	        text.alignment = TMPro.TextAlignmentOptions.Midline;
-	        text.raycastTarget = false;
-
-            RectTransform textRT = text.GetComponent<RectTransform>();
-            textRT.anchorMin = Vector3.zero;
-            textRT.anchorMax = Vector3.one;
+	        text.fontSize = 24;
+			text.alignment = TextAnchor.MiddleCenter;
+			text.raycastTarget = false;
 
             buttonProRectTrans.sizeDelta = text.rectTransform.sizeDelta = new Vector2(163,50);
 	        buttonProRectTrans.localPosition = Vector3.zero;
-	    }
-	
-	    public static void DrawDoubleClickGUI(string title, ref bool m_PanelOpen, SerializedProperty isuseDoubleClick , SerializedProperty clickInterval, SerializedProperty evetnts)
+
+			// 不知道为什么会大一圈
+			//RectTransform textRT = text.GetComponent<RectTransform>();
+			//textRT.anchorMin = Vector3.zero;
+			//textRT.anchorMax = Vector3.one;
+		}
+
+        public static void DrawDoubleClickGUI(string title, ref bool m_PanelOpen, SerializedProperty isuseDoubleClick , SerializedProperty clickInterval, SerializedProperty evetnts)
 	    {
 	        LayoutFrameBox(() =>
 	        {

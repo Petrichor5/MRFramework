@@ -244,10 +244,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start Game
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d91493015e1d6b640906630bfe410ac7, type: 2}
-  m_sharedMaterial: {fileID: -5771879206571332867, guid: d91493015e1d6b640906630bfe410ac7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a503fd9256165a4bad49f0013c092f7, type: 2}
+  m_sharedMaterial: {fileID: -121739556669929754, guid: 9a503fd9256165a4bad49f0013c092f7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -314,9 +314,9 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   m_LocalizationTextExtend:
-    m_UseLocalization: 0
+    m_UseLocalization: 1
     m_ChangeFont: 1
-    m_Key: 
+    m_Key: WBP_Main_Main_1
 --- !u!1 &9080770529141166564
 GameObject:
   m_ObjectHideFlags: 0

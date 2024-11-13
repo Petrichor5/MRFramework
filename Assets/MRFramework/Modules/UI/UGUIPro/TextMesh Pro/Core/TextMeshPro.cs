@@ -10,13 +10,25 @@ namespace MRFramework.UGUIPro
     [System.Serializable]
     public class TextMeshPro : TextMeshProUGUI
     {
+        [SerializeField]
+        private LocalizationTextExtend m_LocalizationTextExtend = new LocalizationTextExtend();
+
+        public LocalizationTextExtend LocalizationTextExtend => m_LocalizationTextExtend;
+
         private CanvasGroup m_CanvasGroup;
         private bool m_IsVisible;
         private Regex m_Regex;
-        
+
         protected override void Awake()
         {
             base.Awake();
+
+            if (m_LocalizationTextExtend.UseLocalization)
+            {
+                m_LocalizationTextExtend.Initializa(this);
+                m_LocalizationTextExtend.UpdateFont();
+                m_LocalizationTextExtend.UpdateText();
+            }
 
             m_CanvasGroup = gameObject.GetComponent<CanvasGroup>();
             if (m_CanvasGroup != null)
@@ -24,6 +36,16 @@ namespace MRFramework.UGUIPro
                 m_IsVisible = m_CanvasGroup.alpha == 1;
                 m_CanvasGroup.interactable = m_IsVisible;
                 m_CanvasGroup.blocksRaycasts = m_IsVisible;
+            }
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            if (m_LocalizationTextExtend.UseLocalization)
+            {
+                m_LocalizationTextExtend.Release();
             }
         }
 
@@ -42,17 +64,17 @@ namespace MRFramework.UGUIPro
         {
             text = sContent;
         }
-    
+
         public void SetTemplateText(params string[] strParams)
         {
             CheckInitTemplate();
-            
+
             var sContent = text;
             var matches = m_Regex.Matches(sContent);
 
             // 确保参数数量与占位符数量匹配
             if (matches.Count != strParams.Length) return;
-            
+
             // 使用StringBuilder，防止String多次重复替换导致性能消耗
             var sb = new StringBuilder();
             int lastIndex = 0;
@@ -68,7 +90,7 @@ namespace MRFramework.UGUIPro
             }
             // 添加最后的文本部分
             sb.Append(text.Substring(lastIndex));
-            
+
             text = sb.ToString();
         }
 
@@ -79,7 +101,7 @@ namespace MRFramework.UGUIPro
                 m_Regex = new Regex(@"\{(\w+)\}", RegexOptions.Compiled);
             }
         }
-        
+
         /// <summary>
         /// 打字机效果
         /// </summary>
@@ -89,13 +111,13 @@ namespace MRFramework.UGUIPro
         public void TweenText(string endValue, float duration, Action onComplete = null)
         {
             // DoTween Pro 的功能，需要购买Pro版本
-            
+
             // this.DoText(endValue, duration)
             //     .SetAutoKill()
-                // .onComplete += () =>
-                // {
-                //     onComplete?.Invoke();
-                // };
+            // .onComplete += () =>
+            // {
+            //     onComplete?.Invoke();
+            // };
         }
     }
 }
